@@ -1,0 +1,40 @@
+﻿<!-- Author: Kamrin Aubin
+     Last Modified: December 13, 2021
+     Description: Login Partial View. Depending on if a user is logged in or not.
+                  The navigation bar displays different links. Logged out: Login/Registeer
+                  Logged in: Manage Account/Logout
+
+ -->
+
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<ul class="navbar-nav">
+    <!-- If the user is logged in -->
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <!-- Display the links for managing account and logging out -->
+        <li class="nav-item">
+            <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Manage Account</a>
+        </li>
+        <li class="nav-item">
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button type="submit" class="nav-link btn btn-link text-light">Logout</button>
+            </form>
+        </li>
+    }
+    else
+    {
+
+        <!-- Else, user is not logged in -->
+
+        <!-- Display the links for login and register -->
+        <li class="nav-item">
+            <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        </li>
+    }
+</ul>
